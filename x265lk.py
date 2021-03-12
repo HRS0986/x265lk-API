@@ -1,6 +1,7 @@
 import requests as rq
 from bs4 import BeautifulSoup
 from tqdm import tqdm
+import re
 from colorama import init, Fore
 
 
@@ -294,14 +295,13 @@ class x265LK:
             return { 'response_code': self.CONNECTION_ERROR, 'status_code': None, 'data': None }
 
 
-    def get_by_year(self, year:int, max=1):
-
+    def __get_from_pages(self, term:str, param:str, max=1):
         movie_data = []
         tv_data = []
 
-        def get_from_page(year:int, page:int):
+        def get_from_page(page:int):
             try:
-                URL = f'https://x265lk.com/release/{year}/page/{page}/'
+                URL = f'https://x265lk.com/{term}/{param}/page/{page}/'
                 r = rq.get(URL)
 
                 if r.status_code == 200:
@@ -335,7 +335,6 @@ class x265LK:
                     # OK. No Errors
                     return { 'response_code': self.OK, 'status_code': r.status_code, 'data': (movies, tv_series) }
 
-
                 # Web Errors Like 404, 500, 401...
                 return { 'response_code': self.WEB_ERROR, 'status_code': r.status_code, 'data': None }
 
@@ -347,7 +346,7 @@ class x265LK:
                 return { 'response_code': self.CONNECTION_ERROR, 'status_code': None, 'data': None }
 
         for i in range(1, max+1):
-            response = get_from_page(year, i)
+            response = get_from_page(i)
             if response['response_code'] == 1:
                 movie_data.extend(response['data'][0])
                 tv_data.extend(response['data'][1])
@@ -358,18 +357,63 @@ class x265LK:
         
         # OK. No Errors
         return { 'response_code': self.OK, 'status_code': 200, 'data': data }
+        
+
+    def get_by_year(self, year:str, max=1):
+        response = self.__get_from_pages('release', year, max)
+        return response
+        
+
+    def get_genres(self):
+        '''
+        return genres data as a list of dictionaries
+        '''
+
+        URL_PTN = r'https://x265lk.com/genre/(?:.+?)/'
+        REO = re.compile(URL_PTN)
+        URL = 'https://x265lk.com/'
+
+        try:
+            r = rq.get(URL)
+            if r.status_code == 200:
+                genres_html = REO.findall(r.text)
+                genres = []
+                g_links = []
+                for link in genres_html:                    
+                    if not link in g_links:
+                        g_links.append(link)
+                        g_name = link.split('/')[-2]                    
+                        genre_data = { 'name':g_name, 'url':link }
+                        genres.append(genre_data)                
+
+                # OK. No Errors
+                return { 'response_code': self.OK, 'status_code': r.status_code, 'data': genres }
+
+            # Web Errors Like 404, 500, 401...
+            return { 'response_code': self.WEB_ERROR, 'status_code': r.status_code, 'data': None }
+
+        except KeyboardInterrupt:
+            return { 'response_code': self.KEYBOARD_INTERRUPT, 'status_code': None, 'data': None }
+
+        except Exception as e:
+            # Connection Error
+            return { 'response_code': self.CONNECTION_ERROR, 'status_code': None, 'data': None }
 
 
-
+    def get_by_genre(self, genre:str, max=1):
+        response = self.__get_from_pages('genre', genre, max)
+        return response
 
 x265 = x265LK()
-k = x265.get_by_year(2014, 4)
-k = k['data']
-m = k['movies']
-# t = k['tv_seies']
+res = x265.get_by_genre('action', 2)
+print(res['data']['movies'])
+# k = x265.get_by_year(2014, 4)
+# k = k['data']
+# m = k['movies']
+# t = k['tv_series']
 
-for i in m:
-    print(i)
+# for i in t:
+#     print(i)
 # mode = int(input('1 For TV. 2 For Movie: '))
 # term = input('Search Term : ').strip()
 # tv = True if mode == 1 else False
