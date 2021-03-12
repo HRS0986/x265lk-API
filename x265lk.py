@@ -57,14 +57,14 @@ class x265LK:
                     return { 'response_code': self.NO_SEARCH_DATA, 'status_code':r.status_code, 'data': 'Nothing Found' }
 
             # Web Errors Like 404, 500, 401...
-            return { 'response_code': self.WEB_ERROR,  'status_code': r.status_code, 'data': None }
+            return { 'response_code': self.WEB_ERROR, 'status_code': r.status_code, 'data': None }
 
         except KeyboardInterrupt:
-            return { 'response_code': self.KEYBOARD_INTERRUPT,  'status_code': None, 'data': None }
+            return { 'response_code': self.KEYBOARD_INTERRUPT, 'status_code': None, 'data': None }
 
         except Exception as e:
             # Connection Error
-            return { 'response_code': self.CONNECTION_ERROR,  'status_code': None, 'data': None }
+            return { 'response_code': self.CONNECTION_ERROR, 'status_code': None, 'data': None }
         
 
     def download(self, link: str, path: str, progress=True):
@@ -113,11 +113,11 @@ class x265LK:
             return { 'response_code': self.WEB_ERROR, 'status_code': r.status_code, 'data': None }
         
         except KeyboardInterrupt:
-            return { 'response_code': self.KEYBOARD_INTERRUPT,  'status_code': None, 'data': None }
+            return { 'response_code': self.KEYBOARD_INTERRUPT, 'status_code': None, 'data': None }
 
         except Exception as e:
             # Connection Error
-            return { 'response_code': self.CONNECTION_ERROR,  'status_code': None, 'data': None }
+            return { 'response_code': self.CONNECTION_ERROR, 'status_code': None, 'data': None }
 
 
     def extract_movie_or_episode_copy(self, tv:bool, link:str) -> dict:
@@ -157,17 +157,17 @@ class x265LK:
                     copies.append(copy_data)
 
                 # OK. No Errors
-                return { 'response_code': self.OK,  'status_code': r.status_code, 'data': copies }
+                return { 'response_code': self.OK, 'status_code': r.status_code, 'data': copies }
             
             # Web Errors Like 404, 500, 401...
-            return { 'response_code': self.WEB_ERROR,  'status_code': r.status_code, 'data': None }
+            return { 'response_code': self.WEB_ERROR, 'status_code': r.status_code, 'data': None }
 
         except KeyboardInterrupt:
-            return { 'response_code': self.KEYBOARD_INTERRUPT,  'status_code': None, 'data': None }
+            return { 'response_code': self.KEYBOARD_INTERRUPT, 'status_code': None, 'data': None }
 
         except Exception as e:
             # Connection Error
-            return { 'response_code': self.CONNECTION_ERROR,  'status_code': None, 'data': None }
+            return { 'response_code': self.CONNECTION_ERROR, 'status_code': None, 'data': None }
 
 
     def get_download_link(self, link:str) -> dict:
@@ -187,17 +187,17 @@ class x265LK:
                 final_link: str = soup.find('div', {'class':'inside'}).a['href']               
 
                 # OK. No Errors
-                return { 'response_code': self.OK,  'status_code': r.status_code, 'data': final_link }
+                return { 'response_code': self.OK, 'status_code': r.status_code, 'data': final_link }
 
             # Web Errors Like 404, 500, 401...
-            return { 'response_code': self.WEB_ERROR,  'status_code': r.status_code, 'data': None }
+            return { 'response_code': self.WEB_ERROR, 'status_code': r.status_code, 'data': None }
 
         except KeyboardInterrupt:
-            return { 'response_code': self.KEYBOARD_INTERRUPT,  'status_code': None, 'data': None }
+            return { 'response_code': self.KEYBOARD_INTERRUPT, 'status_code': None, 'data': None }
 
         except Exception as e:
             # Connection Error
-            return { 'response_code': self.CONNECTION_ERROR,  'status_code': None, 'data': None }
+            return { 'response_code': self.CONNECTION_ERROR, 'status_code': None, 'data': None }
 
 
     def extract_seasons(self, link: str) -> dict:
@@ -247,20 +247,129 @@ class x265LK:
                     seasons_data.append(season)
 
                 # OK. No Errors
-                return { 'response_code': self.OK,  'status_code': r.status_code, 'data': seasons_data }
+                return { 'response_code': self.OK, 'status_code': r.status_code, 'data': seasons_data }
 
             # Web Errors Like 404, 500, 401...
-            return { 'response_code': self.WEB_ERROR,  'status_code': r.status_code, 'data': None }
+            return { 'response_code': self.WEB_ERROR, 'status_code': r.status_code, 'data': None }
 
         except KeyboardInterrupt:
-            return { 'response_code': self.KEYBOARD_INTERRUPT,  'status_code': None, 'data': None }
+            return { 'response_code': self.KEYBOARD_INTERRUPT, 'status_code': None, 'data': None }
 
         except Exception as e:
             # Connection Error
-            return { 'response_code': self.CONNECTION_ERROR,  'status_code': None, 'data': None }
+            return { 'response_code': self.CONNECTION_ERROR, 'status_code': None, 'data': None }
 
 
-# x265 = x265LK()
+    def get_years(self):
+        '''
+        return years data as a list of dictionaries
+        '''
+
+        URL = 'https://x265lk.com/'
+
+        try:
+            r = rq.get(URL)
+            if r.status_code == 200:
+                soup = BeautifulSoup(r.text, 'html.parser')
+                year_list_html = soup.find('ul', { 'class' : 'releases scrolling'})
+                years_html = year_list_html.findAll('a')
+                years = []
+                for y in years_html:
+                    year = y.text
+                    link = y['href']
+                    year_data = { 'year':year, 'url':link }
+                    years.append(year_data)
+
+                # OK. No Errors
+                return { 'response_code': self.OK, 'status_code': r.status_code, 'data': years }
+
+            # Web Errors Like 404, 500, 401...
+            return { 'response_code': self.WEB_ERROR, 'status_code': r.status_code, 'data': None }
+
+        except KeyboardInterrupt:
+            return { 'response_code': self.KEYBOARD_INTERRUPT, 'status_code': None, 'data': None }
+
+        except Exception as e:
+            # Connection Error
+            return { 'response_code': self.CONNECTION_ERROR, 'status_code': None, 'data': None }
+
+
+    def get_by_year(self, year:int, max=1):
+
+        movie_data = []
+        tv_data = []
+
+        def get_from_page(year:int, page:int):
+            try:
+                URL = f'https://x265lk.com/release/{year}/page/{page}/'
+                r = rq.get(URL)
+
+                if r.status_code == 200:
+                    soup = BeautifulSoup(r.text, 'html.parser')
+                    movies_html = soup.findAll('article', { 'class' : 'item movies'})
+                    tv_html = soup.findAll('article', { 'class' : 'item tvshows'})
+                    
+                    movies = []
+                    tv_series = []
+
+                    for movie in movies_html:
+                        movie_data = movie.find('div', { 'class' : 'data'}).a
+                        title = movie_data.text
+                        link = movie_data['href']
+
+                        movie_d = { 'title':title, 'url':link }
+                        movies.append(movie_d)
+
+                    for tv in tv_html:
+                        series_data = tv.find('div', { 'class' : 'data'}).a
+                        title = series_data.text
+                        link = series_data['href']
+
+                        series_d = { 'title':title, 'url':link }
+                        tv_series.append(series_d)
+
+                    # OK. No Errors
+                    return { 'response_code': self.OK, 'status_code': r.status_code, 'data': (movies, tv_series) }
+
+                elif r.status_code == 404:
+                    # OK. No Errors
+                    return { 'response_code': self.OK, 'status_code': r.status_code, 'data': (movies, tv_series) }
+
+
+                # Web Errors Like 404, 500, 401...
+                return { 'response_code': self.WEB_ERROR, 'status_code': r.status_code, 'data': None }
+
+            except KeyboardInterrupt:
+                return { 'response_code': self.KEYBOARD_INTERRUPT, 'status_code': None, 'data': None }
+
+            except Exception as e:
+                # Connection Error
+                return { 'response_code': self.CONNECTION_ERROR, 'status_code': None, 'data': None }
+
+        for i in range(1, max+1):
+            response = get_from_page(year, i)
+            if response['response_code'] == 1:
+                movie_data.extend(response['data'][0])
+                tv_data.extend(response['data'][1])
+            else:
+                return response
+
+        data = { 'movies': movie_data, 'tv_series': tv_data } 
+        
+        # OK. No Errors
+        return { 'response_code': self.OK, 'status_code': 200, 'data': data }
+
+
+
+
+x265 = x265LK()
+k = x265.get_by_year(2014, 4)
+k = k['data']
+m = k['movies']
+# t = k['tv_seies']
+
+for i in m:
+    print(i)
 # mode = int(input('1 For TV. 2 For Movie: '))
 # term = input('Search Term : ').strip()
 # tv = True if mode == 1 else False
