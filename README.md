@@ -11,18 +11,20 @@ pip install -r requirements.txt
 python x265cli.py
 ```
 
-![Screen1](img\s1.png)
-
-![Screen2](img\s2.png)
-
-![Screen3](img\s3.png)
-
-![Screen4](img\s4.png)
-
-![Screen5](img\s5.png)
+Binaries are available for windows. Download from [here](https://github.com/HRS0986/x265lk-API/releases/tag/1.0.0).
 
 
-Binaries are available for windows. Download from here.
+![Screen1](img/s1.png)
+
+![Screen2](img/s2.png)
+
+![Screen3](img/s3.png)
+
+![Screen4](img/s4.png)
+
+![Screen5](img/s5.png)
+
+<br>
 
 ## Getting Started with API Client
 
