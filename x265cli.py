@@ -399,7 +399,7 @@ def get_search():
     search_result: list = x265.search(search_term, mode)
     
     
-    if search_result == -1:
+    if search_result == -1 or len(search_result) == 0:
         print(Fore.LIGHTRED_EX + '[!] Nothing Found' + Fore.RESET)
         os.system('PAUSE')
         get_search()
@@ -497,7 +497,7 @@ def get_episode(season_no, series_name, dtype):
         x265.display_title()
         print(f'[+] Episodes to download:', end=' ') 
         print(*[i for i in epi_nums], sep=' ')
-        
+
         for epi in epi_nums:
             link, epi_no = x265.get_ep_link(epi)
             if link == -9:
