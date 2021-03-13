@@ -495,6 +495,9 @@ def get_episode(season_no, series_name, dtype):
         path:str = x265.get_save_path()
 
         x265.display_title()
+        print(f'[+] Episodes to download:', end=' ') 
+        print(*[i for i in epi_nums], sep=' ')
+        
         for epi in epi_nums:
             link, epi_no = x265.get_ep_link(epi)
             if link == -9:
@@ -581,10 +584,15 @@ def get_episode(season_no, series_name, dtype):
 if __name__ == '__main__':
     try:
         mode_select()
+
     except KeyboardInterrupt:
         os.system('CLS')
         exit()
 
     except KeyError:
+        os.system('CLS')
+        exit()
+    
+    except:
         os.system('CLS')
         exit()
