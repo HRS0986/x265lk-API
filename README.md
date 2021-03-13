@@ -29,8 +29,11 @@ Binaries are available for windows. Download from here.
 ```python
 >>> from x265lk import x265LK
 >>> x265lk = x265LK()
+```
 
-# Search TV Series
+**Search TV Series**
+
+```python
 >>> tv_result = x265lk.search('lost')
 >>> print(tv_result)
 {
@@ -49,8 +52,11 @@ Binaries are available for windows. Download from here.
         }
     ]
 }
+```
 
-# Search Movies
+**Search Movies**
+
+```python
 >>> movie_result = x265lk.search('lost', tv=False)
 >>> print(movie_result)
 {
@@ -73,8 +79,11 @@ Binaries are available for windows. Download from here.
         }
     ]
 }
+```
 
-# Get Season's Data Of A TV Series
+**Get Season's Data Of A TV Series**
+
+```python
 >>> seasons_data = x265lk.extract_seasons('hhttps://x265lk.com/tvshows/chernobyl/')
 >>> print(seasons_data)
 {
@@ -119,8 +128,10 @@ Binaries are available for windows. Download from here.
         }
     ]
 }
+```
 
-# Get All Copies Of A Movie
+**Get All Copies Of A Movie**
+```python
 >>> movie_copies_data = x265lk.extract_movie_or_episode_copy(False, 'https://x265lk.com/movies/tenet/')
 >>> print(copies_data)
 {
@@ -179,8 +190,10 @@ Binaries are available for windows. Download from here.
         }
     ]
 }
+```
 
-# Get All Copies Of A Episode
+**Get All Copies Of A Episode**
+```python
 >>> episode_copies_data = x265lk.extract_movie_or_episode_copy(True, 'https://x265lk.com/episodes/supernatural-1x1/')
 >>> print(episode_copies_data)
 {
@@ -194,8 +207,9 @@ Binaries are available for windows. Download from here.
         }
     ]
 }
-
-# Get Final Download Link Of A Movie Or Episode
+```
+**Get Final Download Link Of A Movie Or Episode**
+```python
 >>> link = x265lk.get_download_link(episode_copies_data['data'][0]['url'])
 >>> print(link)
 {
@@ -211,8 +225,10 @@ Binaries are available for windows. Download from here.
     'status_code': 200, 
     'data': 'https://dl2.x265lk.cloud/0:/Movies/English/Tenet%202020/www.x265lk.com.Tenet.2020.720p.10bit.HDRip.2CH.HEVC.x265.mkv'
 }
+```
 
-# Download
+**Download**
+```python
 >>> d = x265lk.download(link['data'], 'D:\\Movies', progress=False)
 >>> print(d)
 {
