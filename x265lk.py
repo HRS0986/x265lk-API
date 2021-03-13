@@ -304,13 +304,14 @@ class x265LK:
                 URL = f'https://x265lk.com/{term}/{param}/page/{page}/'
                 r = rq.get(URL)
 
+                movies = []
+                tv_series = []
+
                 if r.status_code == 200:
                     soup = BeautifulSoup(r.text, 'html.parser')
                     movies_html = soup.findAll('article', { 'class' : 'item movies'})
                     tv_html = soup.findAll('article', { 'class' : 'item tvshows'})
                     
-                    movies = []
-                    tv_series = []
 
                     for movie in movies_html:
                         movie_data = movie.find('div', { 'class' : 'data'}).a
@@ -335,7 +336,7 @@ class x265LK:
                     # OK. No Errors
                     return { 'response_code': self.OK, 'status_code': r.status_code, 'data': (movies, tv_series) }
 
-                # Web Errors Like 404, 500, 401...
+                # Web Errors Like 500, 401...
                 return { 'response_code': self.WEB_ERROR, 'status_code': r.status_code, 'data': None }
 
             except KeyboardInterrupt:
@@ -360,6 +361,13 @@ class x265LK:
         
 
     def get_by_year(self, year:str, max=1):
+        '''
+        params:
+            year - year to search
+            max - number of pages to search
+
+        return a dictionary contain movies and tv series released in given year
+        '''
         response = self.__get_from_pages('release', year, max)
         return response
         
@@ -401,12 +409,19 @@ class x265LK:
 
 
     def get_by_genre(self, genre:str, max=1):
+        '''
+        params:
+            genre - genre to search
+            max - number of pages to search
+
+        return a dictionary contain movies and tv series of the genre
+        '''
         response = self.__get_from_pages('genre', genre, max)
         return response
 
-x265 = x265LK()
-res = x265.get_by_genre('action', 2)
-print(res['data']['movies'])
+# x265 = x265LK()
+# res = x265.get_by_genre('action', 2)
+# print(res['data']['movies'])
 # k = x265.get_by_year(2014, 4)
 # k = k['data']
 # m = k['movies']
