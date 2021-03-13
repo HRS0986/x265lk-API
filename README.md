@@ -240,7 +240,107 @@ Binaries are available for windows. Download from here.
 # If response_code is 1, Download Completed
 # Data is the downloaded path
 ```
+
+**Get Years**
+
+```python
+>>> y = x265lk.get_years()
+>>> print(y)
+...
+
+```
+
+**Get Movies Or TV Series By Released Year**
+
+```python
+>>> ymt = x265lk.get_by_year('1993')
+>>> print(ymt)
+{
+    'response_code': 1, 
+    'status_code': 200, 
+    'data': {
+        'movies': [
+            {
+                'title': 'Hocus Pocus', 
+                'url': 'https://x265lk.com/movies/hocus-pocus/'
+            }, 
+            {
+                'title': 'Batman: Mask of the Phantasm', 
+                'url': 'https://x265lk.com/movies/batman-mask-of-the-phantasm/'
+            }, 
+            {
+                'title': 'Jurassic Park', 
+                'url': 'https://x265lk.com/movies/jurassic-park/'
+            }, 
+            {
+                'title': 'Teenage Mutant Ninja Turtles III', 
+                'url': 'https://x265lk.com/movies/teenage-mutant-ninja-turtles-iii/'
+            }
+        ], 
+        'tv_series': [
+            {
+                'title': 'The X-Files', 
+                'url': 'https://x265lk.com/tvshows/the-x-files/'
+            }
+        ]
+    }
+}
+```
+
+**Get Genres**
+
+```python
+>>> g = x265lk.get_genres()
+>>> print(g)
+...
+
+```
+
 ---
+
+**Get Moviea and TV Series Of A Genre**
+
+```python
+>>> gmt = x265lk.get_by_genre('war-politics')
+>>> print(gmt)
+{
+    'response_code': 1, 
+    'status_code': 200, 
+    'data': {
+        'movies': [], 
+        'tv_series': [
+            {
+                'title': 'Bodyguard', 
+                'url': 'https://x265lk.com/tvshows/bodyguard/'
+            }, 
+            {
+                'title': 'SEAL Team', 
+                'url': 'https://x265lk.com/tvshows/seal-team/'
+            }, 
+            {
+                'title': 'Scarlet Heart: Ryeo', 
+                'url': 'https://x265lk.com/tvshows/scarlet-heart-ryeo/'
+            }, 
+            {
+                'title': 'Avrodh – The Siege Within', 
+                'url': 'https://x265lk.com/tvshows/avrodh-the-siege-within/'
+            }, 
+            {
+                'title': 'The K2', 
+                'url': 'https://x265lk.com/tvshows/the-k2/'
+            }, 
+            {
+                'title': 'Tom Clancy’s Jack Ryan', 
+                'url': 'https://x265lk.com/tvshows/tom-clancys-jack-ryan/'
+            }, 
+            {
+                'title': 'Band of Brothers', 
+                'url': 'https://x265lk.com/tvshows/band-of-brothers/'
+            }
+        ]
+    }
+}
+```
 
 ## Direct Downloader Tool
 
