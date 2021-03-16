@@ -11,15 +11,15 @@ pip install -r requirements.txt
 python x265cli.py
 ```
 
-![Screen1](img\s1.png)
+![Screen1](img/s1.png)
 
-![Screen2](img\s2.png)
+![Screen2](img/s2.png)
 
-![Screen3](img\s3.png)
+![Screen3](img/s3.png)
 
-![Screen4](img\s4.png)
+![Screen4](img/s4.png)
 
-![Screen5](img\s5.png)
+![Screen5](img/s5.png)
 
 
 Binaries are available for windows. Download from here.
