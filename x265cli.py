@@ -457,10 +457,8 @@ def get_season():
             'name': 'ui',
             'message': 'What to do next?',
             'choices': [
-                'Download Another Episode',
                 'Mode Change',
-                'Change Season',
-                'Search TV Series',
+                'Search Movie',
                 'Exit'
             ],
             'filter': lambda val: val.lower()
@@ -468,11 +466,7 @@ def get_season():
 
         answer = prompt(question)['ui']
         
-        if answer[0] == 'd':
-            get_episode(season_no, series_name, dtype)
-        elif answer[0] == 'c':
-            get_season()
-        elif answer[0] == 's':
+        if answer[0] == 's':
             get_search()
         elif answer[0] == 'm':
             mode_select()
@@ -495,7 +489,7 @@ def get_episode(season_no, series_name, dtype):
         path:str = x265.get_save_path()
 
         x265.display_title()
-        print(f'[+] Episodes to download:', end=' ') 
+        print(f'[+] Episodes to download:', end=' ')
         print(*[i for i in epi_nums], sep=' ')
 
         for epi in epi_nums:
@@ -593,6 +587,10 @@ if __name__ == '__main__':
         os.system('CLS')
         exit()
     
+    except KeyError:
+        os.system('CLS')
+        exit()
+
     except:
         os.system('CLS')
         exit()
