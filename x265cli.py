@@ -285,7 +285,7 @@ class x265LK:
             download_div = soup.find('div', {'id':'download'})
             link_data = download_div.find('tbody').findAll('td')[0]
             download_page_link = link_data.a['href']
-            self.__episodes[epi_no]['download_page_url'] = download_page_link
+            self.__episodes[epi_no-1]['download_page_url'] = download_page_link
 
             r2 = rq.get(download_page_link)
 
