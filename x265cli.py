@@ -243,7 +243,7 @@ class x265LK:
         print(Fore.RESET)
 
         if not ask:
-            return [i for i in range(1, len(self.__seasons)+1)]
+            return [i for i in range(1, len(self.__episodes)+1)]
 
         print('[+] Enter Episode Number. Or')
         print('[+] Enter Episode Numbers Space Seperated. Or')
