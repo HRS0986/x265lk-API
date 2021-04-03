@@ -144,7 +144,7 @@ if 'tvshows' in link:
                 sn = season['season_no']
                 display_season(season, sn)
 
-        elif ep_copy_response['response_code'] == 4:
+        elif seasons_response['response_code'] == 4:
             print(Fore.RESET + f'\n[+] Thank you for using...')
             exit()
 
