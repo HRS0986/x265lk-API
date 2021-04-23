@@ -201,7 +201,7 @@ if 'tvshows' in link:
 
                     if ep_copy_response['response_code'] == 1:
                         ep_copy_data = ep_copy_response['data'][0]
-                        display_episode_and_download(ep_copy_data, ep_name)
+                        display_episode_and_download(ep_copy_data, ep_name, ep_no)
 
                     elif ep_copy_response['response_code'] == 4:
                         print('[+] Thank you for using...')
