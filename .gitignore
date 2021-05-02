@@ -1,1 +1,8 @@
 /xenv
+bugs.txt
+/dist
+/__pycache__
+/.idea
+Dockerfile
+tests.py
+x265cli-rebuild.py

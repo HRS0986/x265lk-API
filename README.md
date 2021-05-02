@@ -11,9 +11,6 @@ pip install -r requirements.txt
 python x265cli.py
 ```
 
-Binaries are available for windows. Download from [here](https://github.com/HRS0986/x265lk-API/releases/tag/1.0.0).
-
-
 ![Screen1](img/s1.png)
 
 ![Screen2](img/s2.png)
@@ -24,15 +21,19 @@ Binaries are available for windows. Download from [here](https://github.com/HRS0
 
 ![Screen5](img/s5.png)
 
-<br>
+
+Binaries are available for windows. Download from here.
 
 ## Getting Started with API Client
 
 ```python
 >>> from x265lk import x265LK
 >>> x265lk = x265LK()
+```
 
-# Search TV Series
+**Search TV Series**
+
+```python
 >>> tv_result = x265lk.search('lost')
 >>> print(tv_result)
 {
@@ -51,8 +52,11 @@ Binaries are available for windows. Download from [here](https://github.com/HRS0
         }
     ]
 }
+```
 
-# Search Movies
+**Search Movies**
+
+```python
 >>> movie_result = x265lk.search('lost', tv=False)
 >>> print(movie_result)
 {
@@ -75,8 +79,11 @@ Binaries are available for windows. Download from [here](https://github.com/HRS0
         }
     ]
 }
+```
 
-# Get Season's Data Of A TV Series
+**Get Season's Data Of A TV Series**
+
+```python
 >>> seasons_data = x265lk.extract_seasons('hhttps://x265lk.com/tvshows/chernobyl/')
 >>> print(seasons_data)
 {
@@ -121,8 +128,10 @@ Binaries are available for windows. Download from [here](https://github.com/HRS0
         }
     ]
 }
+```
 
-# Get All Copies Of A Movie
+**Get All Copies Of A Movie**
+```python
 >>> movie_copies_data = x265lk.extract_movie_or_episode_copy(False, 'https://x265lk.com/movies/tenet/')
 >>> print(copies_data)
 {
@@ -181,8 +190,10 @@ Binaries are available for windows. Download from [here](https://github.com/HRS0
         }
     ]
 }
+```
 
-# Get All Copies Of A Episode
+**Get All Copies Of A Episode**
+```python
 >>> episode_copies_data = x265lk.extract_movie_or_episode_copy(True, 'https://x265lk.com/episodes/supernatural-1x1/')
 >>> print(episode_copies_data)
 {
@@ -196,8 +207,9 @@ Binaries are available for windows. Download from [here](https://github.com/HRS0
         }
     ]
 }
-
-# Get Final Download Link Of A Movie Or Episode
+```
+**Get Final Download Link Of A Movie Or Episode**
+```python
 >>> link = x265lk.get_download_link(episode_copies_data['data'][0]['url'])
 >>> print(link)
 {
@@ -213,8 +225,10 @@ Binaries are available for windows. Download from [here](https://github.com/HRS0
     'status_code': 200, 
     'data': 'https://dl2.x265lk.cloud/0:/Movies/English/Tenet%202020/www.x265lk.com.Tenet.2020.720p.10bit.HDRip.2CH.HEVC.x265.mkv'
 }
+```
 
-# Download
+**Download**
+```python
 >>> d = x265lk.download(link['data'], 'D:\\Movies', progress=False)
 >>> print(d)
 {
@@ -226,7 +240,107 @@ Binaries are available for windows. Download from [here](https://github.com/HRS0
 # If response_code is 1, Download Completed
 # Data is the downloaded path
 ```
+
+**Get Years**
+
+```python
+>>> y = x265lk.get_years()
+>>> print(y)
+...
+
+```
+
+**Get Movies Or TV Series By Released Year**
+
+```python
+>>> ymt = x265lk.get_by_year('1993')
+>>> print(ymt)
+{
+    'response_code': 1, 
+    'status_code': 200, 
+    'data': {
+        'movies': [
+            {
+                'title': 'Hocus Pocus', 
+                'url': 'https://x265lk.com/movies/hocus-pocus/'
+            }, 
+            {
+                'title': 'Batman: Mask of the Phantasm', 
+                'url': 'https://x265lk.com/movies/batman-mask-of-the-phantasm/'
+            }, 
+            {
+                'title': 'Jurassic Park', 
+                'url': 'https://x265lk.com/movies/jurassic-park/'
+            }, 
+            {
+                'title': 'Teenage Mutant Ninja Turtles III', 
+                'url': 'https://x265lk.com/movies/teenage-mutant-ninja-turtles-iii/'
+            }
+        ], 
+        'tv_series': [
+            {
+                'title': 'The X-Files', 
+                'url': 'https://x265lk.com/tvshows/the-x-files/'
+            }
+        ]
+    }
+}
+```
+
+**Get Genres**
+
+```python
+>>> g = x265lk.get_genres()
+>>> print(g)
+...
+
+```
+
 ---
+
+**Get Moviea and TV Series Of A Genre**
+
+```python
+>>> gmt = x265lk.get_by_genre('war-politics')
+>>> print(gmt)
+{
+    'response_code': 1, 
+    'status_code': 200, 
+    'data': {
+        'movies': [], 
+        'tv_series': [
+            {
+                'title': 'Bodyguard', 
+                'url': 'https://x265lk.com/tvshows/bodyguard/'
+            }, 
+            {
+                'title': 'SEAL Team', 
+                'url': 'https://x265lk.com/tvshows/seal-team/'
+            }, 
+            {
+                'title': 'Scarlet Heart: Ryeo', 
+                'url': 'https://x265lk.com/tvshows/scarlet-heart-ryeo/'
+            }, 
+            {
+                'title': 'Avrodh – The Siege Within', 
+                'url': 'https://x265lk.com/tvshows/avrodh-the-siege-within/'
+            }, 
+            {
+                'title': 'The K2', 
+                'url': 'https://x265lk.com/tvshows/the-k2/'
+            }, 
+            {
+                'title': 'Tom Clancy’s Jack Ryan', 
+                'url': 'https://x265lk.com/tvshows/tom-clancys-jack-ryan/'
+            }, 
+            {
+                'title': 'Band of Brothers', 
+                'url': 'https://x265lk.com/tvshows/band-of-brothers/'
+            }
+        ]
+    }
+}
+```
 
 ## Direct Downloader Tool
 

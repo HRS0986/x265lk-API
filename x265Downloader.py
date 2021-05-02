@@ -43,7 +43,7 @@ def display_movie_copy_and_download(copy):
         exit()
 
 
-def display_episode_and_download(episode, ep_name):
+def display_episode_and_download(episode, ep_name, ep_no):
     ep_copy_name = episode['copy_name']
     ep_copy_size = episode['size']
     ep_copy_url = episode['url']
@@ -79,7 +79,7 @@ def display_season(season, sn):
 
         if ep_copy_response['response_code'] == 1:
             ep_copy_data = ep_copy_response['data'][0]
-            display_episode_and_download(ep_copy_data, ep_name)
+            display_episode_and_download(ep_copy_data, ep_name, ep_no)
 
         elif ep_copy_response['response_code'] == 4:
             print(Fore.RESET + f'\n[+] Thank you for using...')
@@ -144,7 +144,7 @@ if 'tvshows' in link:
                 sn = season['season_no']
                 display_season(season, sn)
 
-        elif ep_copy_response['response_code'] == 4:
+        elif seasons_response['response_code'] == 4:
             print(Fore.RESET + f'\n[+] Thank you for using...')
             exit()
 
@@ -201,7 +201,7 @@ if 'tvshows' in link:
 
                     if ep_copy_response['response_code'] == 1:
                         ep_copy_data = ep_copy_response['data'][0]
-                        display_episode_and_download(ep_copy_data, ep_name)
+                        display_episode_and_download(ep_copy_data, ep_name, ep_no)
 
                     elif ep_copy_response['response_code'] == 4:
                         print('[+] Thank you for using...')
