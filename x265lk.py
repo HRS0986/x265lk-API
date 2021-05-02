@@ -31,7 +31,8 @@ class x265LK:
             tv - mode. if it's value is true, mode is tv series else movies
 
         return a dictionary contains response_code, status_code, data.
-        if not error, data contains list of dictionaries of search results
+        if not error, data contains list like this:
+                [{id:str, title:str, url:str}, ...]
         """
         searchURL: str = f'{self.__URL}{term}{self.__nonce}'
 
@@ -44,7 +45,6 @@ class x265LK:
 
                 dtype: str = 'tvshows' if tv else 'movies'
                 for id, v in response_data.items():
-                    # print(v, 'v')
                     if dtype in v['url']:
                         item: dict[str, str] = {'id': id, 'title': v['title'], 'url': v['url']}
                         search_result.append(item)
@@ -126,7 +126,8 @@ class x265LK:
             tv - TV or Movie Mode
 
         return a dictionary contains response_code, status_code, data.
-        if not error, data contains list of dictionaries of movie or episode copies
+        if not error, data contains list like this:
+            [{copy_name:str, url:str, size:str}, ...]
         """
 
         movie_title: str = ''
