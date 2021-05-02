@@ -5,4 +5,3 @@ bugs.txt
 /.idea
 Dockerfile
 tests.py
-x265cli-rebuild.py
