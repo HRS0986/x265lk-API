@@ -5,3 +5,5 @@ bugs.txt
 /.idea
 Dockerfile
 tests.py
+/build
+*.spec

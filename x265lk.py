@@ -24,6 +24,9 @@ class x265LK:
     def __str__(self):
         return f'<x265lk Object>'
 
+    def __repr__(self):
+        return f'<x265lk Object>'
+
     def search(self, term: str, tv=True) -> dict:
         """
         params:
@@ -293,11 +296,31 @@ class x265LK:
             # Connection Error
             return {'response_code': self.CONNECTION_ERROR, 'status_code': None, 'data': None}
 
-    def __get_from_pages(self, term: str, param: str, max=1):
+    def __get_from_pages(self, term: str, param: str, max=1) -> dict:
+        """
+        params:
+            term - Value should be 'genre' or 'release'
+            param - genre or year
+            max - page count to scrape data
+
+        scrape data Of a given genre
+        return a dictionary contains response_code, status_code, data.
+        if not error, data contains list like this:
+            { movies: [{ title, url}, ...], tv_series: [{ title, url}, ...] }
+        """
         movie_data = []
         tv_data = []
 
-        def get_from_page(page: int):
+        def get_from_page(page: int) -> dict:
+            """
+            params:
+                page - page number
+
+            return a dictionary contains response_code, status_code, data.
+            if not error, data contains list like this:
+                ([{ title, url}, ...], [{ title, url}, ...])
+            """
+
             try:
                 URL = f'https://x265lk.com/{term}/{param}/page/{page}/'
                 r = rq.get(URL)
@@ -369,7 +392,9 @@ class x265LK:
 
     def get_genres(self):
         """
-        return genres data as a list of dictionaries
+        return a dictionary contains response_code, status_code, genres data as a list of dictionaries.
+        if not error, data contains list like this:
+            [{name, url}, ...]
         """
 
         URL_PTN = r'https://x265lk.com/genre/(?:.+?)/'
